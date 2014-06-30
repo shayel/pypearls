@@ -45,7 +45,7 @@ def partition(p, l):
   """
   tl, fl = list(), list()
   # Caching the append lookup for a small speedup
-  ta, fa = t.append, f.append
+  ta, fa = tl.append, fl.append
  
   for x in l:
     (ta if p(x) else fa)(x)
