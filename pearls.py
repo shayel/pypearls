@@ -32,7 +32,8 @@ def count(p, l):
 def selectMany(f, l):
   """
   Returns an iterator over a flattened enumerable containing the enumerables f(x) for all x in l
-  e.g. selectMany(lambda l: l[:2], ((A, B, C), (D, E, F))) == (A, B, D, E)
+    >>> selectMany(lambda l: l[:2], ((A, B, C), (D, E, F))) 
+    (A, B, D, E)
   """
   return itertools.chain.from_iterable(f(x) for x in l)
   
@@ -44,7 +45,7 @@ def partition(p, l):
   is False
   """
   tl, fl = list(), list()
-  # Caching the append lookup for a small speedup
+  # Caching the append lookup for a miniscule speedup
   ta, fa = tl.append, fl.append
  
   for x in l:
@@ -57,11 +58,11 @@ def chunks(n, l):
   Returns an iterator over lists of n consecutive elements from l
   """
   for i in xrange(0, len(l), n):
-    yield l[i:i + n]
+    yield l[i:(i + n)]
   
   
 def mapValues(f, d):
   """
   Maps the values in the dictionary d, using the function f, while keeping the keys
   """
-  return dict((k, f(v)) for k, v in d.iteritems())
+  return {k: f(v) for k, v in d.iteritems()}
