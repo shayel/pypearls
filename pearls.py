@@ -19,14 +19,14 @@ def last(p, l, default=None):
 
 def contains(p, l):
   """
-  Returns True if there is at least one element x in l such that p(x) is True
+  Returns True if there is at least one element x in l such that p(x) is true
   """
   return any(p(x) for x in l)
 
 
 def count(p, l=lambda _: True):
   """
-  Returns the number of items x in l for which p(x) is True
+  Returns the number of items x in l for which p(x) is true
   """
   return sum(1 for x in l if p(x))
 
@@ -34,7 +34,7 @@ def count(p, l=lambda _: True):
 def select_many(f, l):
   """
   Returns an iterator over a flattened enumerable containing the enumerables f(x) for all x in l
-    >>> selectMany(lambda l: l[:2], ((A, B, C), (D, E, F)))
+    >>> select_many(lambda l: l[:2], ((A, B, C), (D, E, F)))
     (A, B, D, E)
   """
   return itertools.chain.from_iterable(f(x) for x in l)
@@ -42,9 +42,9 @@ def select_many(f, l):
 
 def partition(p, l):
   """
-  Returns two lists: the first of the elements x in l such that p(x) is True for all,
+  Returns two lists: the first of the elements x in l such that p(x) is true for all,
   the second of the elements s x in l that are not in the first list, i.e. for which p(x)
-  is False
+  is false
   """
   tl, fl = list(), list()
   # Caching the append lookup for a miniscule speedup
@@ -65,13 +65,20 @@ def chunks(n, l):
 
 def map_vals(f, d):
   """
-  Maps the values in the dictionary d, using the function f, while keeping the keys
+  Returns a dictionary {k: f(v)} for {k: v}s in d
   """
   return {k: f(v) for k, v in d.iteritems()}
 
 
 def map_keys(f, d):
   """
-  Maps the keys in the dictionary d, using the function f, while keeping the values
+  Returns a dictionary {f(k): v} for {k: v}s in d
   """
   return {f(k): v for k, v in d.iteritems()}
+
+
+def map_dict(f, g, d):
+  """
+  Returns a dictionary {f(k): g(v)} for {k: v}s in d (iow, composition of map_vals with map_keys)
+  """
+  return {f(k): g(v) for k, v in d.iteritems()}
