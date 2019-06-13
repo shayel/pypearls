@@ -82,3 +82,10 @@ def map_dict(f, g, d):
   Returns a dictionary {f(k): g(v)} for {k: v}s in d (iow, composition of map_vals with map_keys)
   """
   return {f(k): g(v) for k, v in d.iteritems()}
+
+
+def fnone(f, x, *args, **kwargs):
+  """
+  Calls f, replacing None as the first positional argument with x.
+  """
+  return f(*(args if len(args) and (args[0] is not None) else ([x] + list(args[1:]))))
